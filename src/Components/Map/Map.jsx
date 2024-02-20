@@ -1,16 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 
 function LocationMarker() {
 	const [position, setPosition] = useState(null);
 	const map = useMapEvents({
-		click() {
+		dblclick() {
 			map.locate();
 		},
 		locationfound(e) {
 			setPosition(e.latlng);
 			map.flyTo(e.latlng, map.getZoom());
 		},
+	});
+
+	map.on("moveend", (some) => {
+		console.log(map.getCenter());
+	});
+
+	map.on("dragend", (some) => {
+		setPosition(map.getCenter());
+	});
+	map.on("zoomend", (some) => {
+		console.log(map.getCenter());
+		if (position) {
+			console.log(position);
+		}
+		setPosition(map.getCenter());
 	});
 
 	return position === null ? null : (
@@ -22,7 +37,10 @@ function LocationMarker() {
 
 export const Map = () => {
 	return (
-		<MapContainer className="w-full h-full" center={{ lat: 51.505, lng: -0.09 }} zoom={13}>
+		<MapContainer
+			className="w-screen h-screen absolute top-0 left-0"
+			center={{ lat: 51.505, lng: -0.09 }}
+			zoom={13}>
 			<TileLayer
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

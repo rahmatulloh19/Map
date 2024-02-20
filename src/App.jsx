@@ -5,6 +5,8 @@ import { io } from "socket.io-client";
 
 const socket = io("ws://localhost:3000");
 
+let uniqueId;
+
 socket.on("clientJoined", async (data) => {
 	uniqueId = await data;
 	console.log(uniqueId);
@@ -12,43 +14,20 @@ socket.on("clientJoined", async (data) => {
 
 const tg = window.Telegram.WebApp;
 
-// const map = L.map("map").setView([0, 0], 13);
+socket.on("connected", (data) => {
+	console.log(data);
+});
 
-// L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-// 	maxZoom: 19,
-// 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-// }).addTo(map);
-
-// map.locate({ setView: true, maxZoom: 16 });
-
-// function onLocationFound(e) {
-// 	var radius = e.accuracy;
-
-// 	L.marker(e.latlng)
-// 		.addTo(map)
-// 		.bindPopup("You are within " + radius + " meters from this point")
-// 		.openPopup();
-
-// 	L.circle(e.latlng, radius).addTo(map);
-// }
-
-// navigator.geolocation.getCurrentPosition(
-// 	(position) => map.panTo([position.coords.latitude, position.coords.longitude]),
-// 	(error) => {
-// 		alert(error);
-// 	}
-// );
-
-// map.on("locationfound", onLocationFound);
-// var marker = L.marker([41, 63]).addTo(map);
+// tg.on("location", (data) => {
+// 	console.log(data);
+// });
 
 function App() {
-	const [location, setLocation] = useState([]);
-
 	return (
-		<>
+		<div className="relative w-screen h-screen top-0 left-0">
 			<Map />
-		</>
+			<button className="w-4 absolute z-20">Hello</button>
+		</div>
 	);
 }
 
