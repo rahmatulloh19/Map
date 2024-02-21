@@ -23,12 +23,7 @@ socket.on("connected", (data) => {
 // });
 
 function App() {
-	return (
-		<div className="relative w-screen h-screen top-0 left-0">
-			<Map />
-			<button className="w-4 absolute z-20">Hello</button>
-		</div>
-	);
+	return <Map />;
 }
 
 export default App;
