@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 
 function LocationMarker() {
+	const [position, setPosition] = useState(null);
+
 	const map = useMapEvents({
 		dblclick() {
 			map.locate();
@@ -11,50 +13,22 @@ function LocationMarker() {
 		locationfound(e) {
 			map.flyTo(e.latlng, map.getZoom());
 		},
+		move() {
+			setPosition(map.getCenter());
+		},
+		moveend() {
+			axios(
+				`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${map.getCenter().lat}&lon=${
+					map.getCenter().lng
+				}`
+			).then(function ({ data }) {
+				console.log(data.address.road);
+				console.log(data.display_name.split(", ", 2));
+			});
+		},
 	});
 	map.setMaxZoom(18);
 	map.setMinZoom(11);
-
-	const [position, setPosition] = useState(null);
-	const [latlng, setLatlng] = useState({
-		lat: undefined,
-		lng: undefined,
-	});
-	const [zoom, setZoom] = useState(undefined);
-
-	map.on("move", () => {
-		if (zoom >= 16) {
-			const lat = map.getCenter().lat.toFixed(5);
-			const lng = map.getCenter().lat.toFixed(5);
-			setLatlng((prev) => (prev.lat != lat && prev.lng != lng ? { lat, lng } : prev));
-		} else if (zoom >= 14) {
-			const lat = map.getCenter().lat.toFixed(4);
-			const lng = map.getCenter().lat.toFixed(4);
-			setLatlng((prev) => (prev.lat != lat && prev.lng != lng ? { lat, lng } : prev));
-		}
-		const lat = map.getCenter().lat.toFixed(3);
-		const lng = map.getCenter().lat.toFixed(3);
-		setLatlng((prev) => (prev.lat != lat && prev.lng != lng ? { lat, lng } : prev));
-	});
-
-	map.on("zoomend", (some) => {
-		setZoom(map.getZoom());
-	});
-
-	useEffect(() => {
-		setPosition(map.getCenter());
-
-		// axios(
-		// 	`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${map.getCenter().lat}&lon=${
-		// 		map.getCenter().lng
-		// 	}`,
-		// 	{
-		// 		timeout: 1000,
-		// 	}
-		// ).then(function (data) {
-		// 	console.log(data.address.road);
-		// });
-	}, [latlng]);
 
 	return position === null ? null : (
 		<Marker position={position}>
