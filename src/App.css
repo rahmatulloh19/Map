@@ -55,3 +55,8 @@ img {
 .leaflet-control-container {
   display: none;
 }
+
+.car-inputs:checked + .car-content {
+  border-color: #009245;
+  opacity: 1;
+}

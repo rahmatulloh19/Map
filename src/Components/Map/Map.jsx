@@ -24,7 +24,7 @@ function LocationMarker() {
     },
   });
   map.setMaxZoom(18);
-  map.setMinZoom(11);
+  map.setMinZoom(9);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((currentLocation) => {
@@ -67,7 +67,7 @@ export const Map = () => {
           <div className="w-screen z-[1000]">
             <ControlMenu />
           </div>
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <TileLayer url="https://tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token=N3MqJcqPUczcjAdSTBajt6UpuSt6dao04rmOz1EzZSN20O1p59aydcPcoHEK3wBD" />
           <LocationMarker />
         </MapContainer>
       )}

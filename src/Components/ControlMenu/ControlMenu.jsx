@@ -17,26 +17,34 @@ export const ControlMenu = () => {
 
   return (
     <div className="absolute bottom-0 flex flex-col" ref={ref}>
-      <div className="pt-[50px] rounded-t-[40px] bg-white w-screen flex justify-between p-9 relative">
+      <div className="py-[50px] rounded-t-[40px] bg-white w-screen flex flex-wrap justify-between p-9 relative">
         <Returner />
-        <label>
-          <input className="visually-hidden" type="radio" name="typeCar" />
-          <span className="border border-[#009245]">
-            <img src={car} alt="" />
-          </span>
-        </label>
-        <label>
-          <input className="visually-hidden" type="radio" name="typeCar" />
-          <span>
-            <img src={carLuxury} alt="" />
-          </span>
-        </label>
-        <label>
-          <input className="visually-hidden" type="radio" name="typeCar" />
-          <span>
-            <img src={carFamily} alt="" />
-          </span>
-        </label>
+        <div className="flex justify-between mb-4 w-full">
+          <label className="">
+            <input className="car-inputs visually-hidden" type="radio" name="typeCar" defaultChecked />
+            <span className="car-content max-w-[100px] min-w-16 px-3 rounded-xl transition border border-neutral-500 pt-[5px] pb-[11px] grow flex items-center justify-center flex-col opacity-70">
+              <img src={car} alt="" />
+              Economy
+            </span>
+          </label>
+          <label className="">
+            <input className="car-inputs visually-hidden" type="radio" name="typeCar" />
+            <span className="car-content max-w-[100px] min-w-16 px-3 rounded-xl transition border border-neutral-500 pt-[5px] pb-[11px] grow flex items-center justify-center flex-col opacity-70">
+              <img src={carLuxury} alt="" />
+              Luxury
+            </span>
+          </label>
+          <label className="">
+            <input className="car-inputs visually-hidden" type="radio" name="typeCar" />
+            <span className="car-content max-w-[100px] min-w-16 px-3 rounded-xl transition border border-neutral-500 pt-[5px] pb-[11px] grow flex items-center justify-center flex-col opacity-70">
+              <img src={carFamily} alt="" />
+              Family
+            </span>
+          </label>
+        </div>
+        <button className="bg-black text-xl text-white w-full py-5 rounded-[30px]" type="submit">
+          Qayerga boramiz
+        </button>
       </div>
     </div>
   );
