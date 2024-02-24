@@ -3,17 +3,16 @@ import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import Image from "../../assets/Ellipse 2.svg";
+import { ControlMenu } from "../ControlMenu/ControlMenu";
 
 function LocationMarker() {
   const [position, setPosition] = useState(null);
 
   const map = useMapEvents({
-    dblclick() {
-      map.locate();
-    },
     locationfound(e) {
       map.flyTo(e.latlng, map.getZoom());
     },
+    dblclick() {},
     // move() {
     //   setPosition(map.getCenter());
     // },
@@ -49,12 +48,8 @@ function LocationMarker() {
 }
 
 // function Component() {
-//   const map = useMapEvents({
-// click() {
-// 	map.locate();
-// },
-//   });
-//   return <button onClick={() => map.locate()}>Locate</button>;
+
+//   return <button >Locate</button>;
 // }
 
 export const Map = () => {
@@ -68,15 +63,12 @@ export const Map = () => {
   return (
     <>
       {position && (
-        <MapContainer className="w-screen h-screen" center={position} zoom={10} scrollWheelZoom={true}>
-          <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <MapContainer className="w-screen h-screen flex" center={position} zoom={10} scrollWheelZoom={true}>
+          <div className="w-screen z-[1000]">
+            <ControlMenu />
+          </div>
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <LocationMarker />
-
-          {/* <div className="bg-red-500 z-[1000] absolute ">
-				<Component />
-				<div className="w-48 h-80"></div>
-				<div className=" hover:scale-95 text-3xl bg-gray-500 active:bg-yellow-300 w-10 h-10"></div>
-			</div> */}
         </MapContainer>
       )}
     </>
