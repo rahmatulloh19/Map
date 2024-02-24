@@ -51,3 +51,7 @@ img {
 .site-main {
   flex-grow: 1;
 }
+
+.leaflet-control-container {
+  display: none;
+}
