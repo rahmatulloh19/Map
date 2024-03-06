@@ -2,8 +2,10 @@ import { useEffect, useRef } from "react";
 import L from "leaflet";
 import { Returner } from "../Returner/Returner";
 import { SelectLocationMarker } from "../SelectLocationMarker/SelectLocationMarker";
+import { Link } from "react-router-dom";
 
-export const CallTaxi = () => {
+// eslint-disable-next-line react/prop-types
+export const CallTaxi = ({ setLast, last }) => {
   const ref = useRef();
 
   useEffect(() => {
@@ -15,12 +17,12 @@ export const CallTaxi = () => {
 
   return (
     <div className="absolute bottom-0 flex flex-col bg-white " ref={ref}>
-      <SelectLocationMarker />
+      <SelectLocationMarker setLast={setLast} last={last} />
       <div className="rounded-t-[40px] w-screen flex flex-wrap justify-between px-9 pt-5 pb-4 relative">
         <Returner />
-        <button className="bg-black text-xl text-white w-full py-5 rounded-[30px]" type="submit">
-          Taxi chaqirish
-        </button>
+        <Link className="bg-black block text-center text-xl !text-white w-full py-5 rounded-[30px]" to="/select-taxi">
+          Joy tanlandi
+        </Link>
       </div>
     </div>
   );

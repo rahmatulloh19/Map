@@ -4,9 +4,10 @@ import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import Image from "../../assets/Ellipse 2.svg";
 import { ControlMenu } from "../ControlMenu/ControlMenu";
-import { Route, Routes } from "react-router";
+import { Route, Routes, useLocation, useNavigate } from "react-router";
 import { CallTaxi } from "../CallTaxi/CallTaxi";
 import { BackToHome } from "../BackToHome/BackToHome";
+import { SelectTaxi } from "../SelectTaxi/SelectTaxi";
 
 function LocationMarker() {
   const [position, setPosition] = useState(null);
@@ -42,7 +43,10 @@ function LocationMarker() {
 }
 
 export const Map = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [position, setPosition] = useState(null);
+  const [last, setLast] = useState(null);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((currentLocation) => {
@@ -54,10 +58,11 @@ export const Map = () => {
       {position && (
         <MapContainer className="w-screen h-full flex" center={position} zoom={10} scrollWheelZoom={true}>
           <div className="w-screen z-[1000]">
-            {location.pathname === "/" ? "" : <BackToHome />}
+            {location.pathname !== "/" ? <BackToHome navigate={navigate} /> : null}
             <Routes>
               <Route path="/" element={<ControlMenu />} />
-              <Route path="/call-taxi" element={<CallTaxi />} />
+              <Route path="/call-taxi" element={<CallTaxi setLast={setLast} last={last} />} />
+              <Route path="/select-taxi" element={<SelectTaxi last={last} />} />
             </Routes>
           </div>
           <TileLayer url="https://tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token=N3MqJcqPUczcjAdSTBajt6UpuSt6dao04rmOz1EzZSN20O1p59aydcPcoHEK3wBD" />

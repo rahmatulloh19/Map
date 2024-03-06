@@ -1,10 +1,14 @@
-import axios from "axios";
+// import axios from "axios";
 import L from "leaflet";
 import { useState } from "react";
 import { Marker, useMapEvents } from "react-leaflet";
 import Image from "../../assets/ic_Pin.svg";
+import { useLocation } from "react-router-dom";
 
-export const SelectLocationMarker = () => {
+// eslint-disable-next-line react/prop-types
+export const SelectLocationMarker = ({ setLast, last }) => {
+  const { pathname } = useLocation();
+
   const [position, setPosition] = useState(null);
   const [isMoved, setIsMoved] = useState(null);
 
@@ -13,10 +17,13 @@ export const SelectLocationMarker = () => {
       map.flyTo(e.latlng, map.getZoom());
     },
     moveend() {
-      axios(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${map.getCenter().lat}&lon=${map.getCenter().lng}`).then(function ({ data }) {
-        console.log(data.address.road);
-        console.log(data.display_name.split(", ", 2));
-      });
+      // axios(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${map.getCenter().lat}&lon=${map.getCenter().lng}`).then(function ({ data }) {
+      //   console.log(data.address.road);
+      //   console.log(data.display_name.split(", ", 2));
+      // });
+      if (pathname === "/call-taxi") {
+        setLast(map.getCenter());
+      }
     },
     move() {
       setPosition(map.getCenter());
@@ -34,5 +41,13 @@ export const SelectLocationMarker = () => {
     iconAnchor: [12, 41],
   });
 
-  return !position && !isMoved ? null : <Marker icon={icon} position={position}></Marker>;
+  if (pathname === "/call-taxi") {
+    return !position && !isMoved ? null : <Marker icon={icon} position={position}></Marker>;
+  }
+
+  if (pathname === "/select-taxi" && last) {
+    return <Marker icon={icon} position={last}></Marker>;
+  }
+
+  return null;
 };
