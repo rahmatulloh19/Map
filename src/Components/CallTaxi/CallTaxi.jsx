@@ -17,7 +17,7 @@ export const CallTaxi = () => {
 
   return (
     <div className="absolute bottom-0 flex flex-col bg-white " ref={ref}>
-      <div className="py-[50px] rounded-t-[40px] w-screen flex flex-wrap justify-between p-9 relative">
+      <div className="rounded-t-[40px] w-screen flex flex-wrap justify-between px-9 pt-5 pb-4 relative">
         <Returner />
         <div className="flex justify-between mb-4 w-full">
           <label className="">
@@ -43,7 +43,7 @@ export const CallTaxi = () => {
           </label>
         </div>
         <button className="bg-black text-xl text-white w-full py-5 rounded-[30px]" type="submit">
-          Qayerga boramiz
+          Taxi chaqirish
         </button>
       </div>
     </div>

@@ -15,7 +15,7 @@ export const ControlMenu = () => {
 
   return (
     <div className="absolute bottom-0 flex flex-col bg-white " ref={ref}>
-      <div className="py-[50px] rounded-t-[40px] w-screen flex flex-wrap justify-between px-9 py-4 relative">
+      <div className="rounded-t-[40px] w-screen flex flex-wrap justify-between px-9 py-4 relative">
         <Returner />
         <div className="flex justify-between mb-4 w-full">
           <h2></h2>
