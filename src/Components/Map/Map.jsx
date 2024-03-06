@@ -4,7 +4,7 @@ import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import Image from "../../assets/Ellipse 2.svg";
 import { ControlMenu } from "../ControlMenu/ControlMenu";
-import { Route, Routes, useLocation } from "react-router";
+import { Route, Routes } from "react-router";
 import { CallTaxi } from "../CallTaxi/CallTaxi";
 import { BackToHome } from "../BackToHome/BackToHome";
 
@@ -43,9 +43,6 @@ function LocationMarker() {
 
 export const Map = () => {
   const [position, setPosition] = useState(null);
-
-  const location = useLocation();
-  console.log(location.pathname);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((currentLocation) => {
