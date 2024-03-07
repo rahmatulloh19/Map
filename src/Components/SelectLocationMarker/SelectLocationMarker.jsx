@@ -24,6 +24,9 @@ export const SelectLocationMarker = ({ setLast, last }) => {
       if (pathname === "/call-taxi") {
         setLast(map.getCenter());
       }
+      if (pathname === "/select-taxi") {
+        // console.log(last);
+      }
     },
     move() {
       setPosition(map.getCenter());

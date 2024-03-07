@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 import L from "leaflet";
@@ -8,6 +8,7 @@ import { Route, Routes, useLocation, useNavigate } from "react-router";
 import { CallTaxi } from "../CallTaxi/CallTaxi";
 import { BackToHome } from "../BackToHome/BackToHome";
 import { SelectTaxi } from "../SelectTaxi/SelectTaxi";
+import { Routing } from "../Routing/Routing";
 
 function LocationMarker() {
   const [position, setPosition] = useState(null);
@@ -18,10 +19,10 @@ function LocationMarker() {
     },
     dblclick() {},
     moveend() {
-      axios(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${map.getCenter().lat}&lon=${map.getCenter().lng}`).then(function ({ data }) {
-        console.log(data.address.road);
-        console.log(data.display_name.split(", ", 2));
-      });
+      // axios(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${map.getCenter().lat}&lon=${map.getCenter().lng}`).then(function ({ data }) {
+      //   console.log(data.address.road);
+      //   console.log(data.display_name.split(", ", 2));
+      // });
     },
   });
   map.setMaxZoom(18);
@@ -53,6 +54,7 @@ export const Map = () => {
       setPosition({ lat: currentLocation.coords.latitude, lng: currentLocation.coords.longitude });
     });
   }, []);
+
   return (
     <>
       {position && (
@@ -62,10 +64,11 @@ export const Map = () => {
             <Routes>
               <Route path="/" element={<ControlMenu />} />
               <Route path="/call-taxi" element={<CallTaxi setLast={setLast} last={last} />} />
-              <Route path="/select-taxi" element={<SelectTaxi last={last} />} />
+              <Route path="/select-taxi" element={<SelectTaxi last={last} position={position} />} />
             </Routes>
           </div>
           <TileLayer url="https://tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token=N3MqJcqPUczcjAdSTBajt6UpuSt6dao04rmOz1EzZSN20O1p59aydcPcoHEK3wBD" />
+          <Routing position={position} last={last} />
           <LocationMarker />
         </MapContainer>
       )}

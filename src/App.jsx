@@ -1,6 +1,8 @@
 import "./App.css";
 import { Map } from "./Components/Map/Map";
 import { io } from "socket.io-client";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+import "leaflet-routing-machine";
 
 const socket = io("ws://localhost:3000");
 
