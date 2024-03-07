@@ -6,9 +6,6 @@ import { useMap } from "react-leaflet";
 export const Routing = ({ position, last }) => {
   const map = useMap();
 
-  console.log(position);
-  console.log(last);
-
   useEffect(() => {
     if (!map) return;
 
@@ -17,6 +14,7 @@ export const Routing = ({ position, last }) => {
       lineOptions: {
         styles: [{ color: "#6FA1EC", weight: 4 }],
       },
+      createMarker: () => null,
       routeWhileDragging: true,
       addWaypoints: false,
       draggableWaypoints: false,
