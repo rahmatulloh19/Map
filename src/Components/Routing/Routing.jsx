@@ -12,7 +12,7 @@ export const Routing = ({ position, last }) => {
     const routingControl = L.Routing.control({
       waypoints: [position, last],
       lineOptions: {
-        styles: [{ color: "#6FA1EC", weight: 4 }],
+        styles: [{ color: "#009245", weight: 4 }],
       },
       createMarker: () => null,
       routeWhileDragging: true,
