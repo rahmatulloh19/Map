@@ -3,13 +3,11 @@ import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 
 // eslint-disable-next-line react/prop-types
-
-console.dir(L);
 export const Routing = ({ position, last }) => {
   const map = useMap();
 
-  console.log(last);
   console.log(position);
+  console.log(last);
 
   useEffect(() => {
     if (!map) return;
@@ -20,9 +18,14 @@ export const Routing = ({ position, last }) => {
         styles: [{ color: "#6FA1EC", weight: 4 }],
       },
       routeWhileDragging: true,
+      addWaypoints: false,
+      draggableWaypoints: false,
+      fitSelectedRoutes: false,
+      showAlternatives: false,
     }).addTo(map);
 
     return () => map.removeControl(routingControl);
-  }, [map]);
+  }, [map, last]);
+
   return null;
 };
