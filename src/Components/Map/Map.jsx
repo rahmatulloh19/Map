@@ -9,6 +9,9 @@ import { CallTaxi } from "../CallTaxi/CallTaxi";
 import { BackToHome } from "../BackToHome/BackToHome";
 import { SelectTaxi } from "../SelectTaxi/SelectTaxi";
 import { Routing } from "../Routing/Routing";
+import { io } from "socket.io-client";
+
+const socket = io("ws://localhost:3000");
 
 function LocationMarker() {
   const [position, setPosition] = useState(null);
@@ -43,11 +46,27 @@ function LocationMarker() {
   return position === null ? null : <Marker icon={icon} position={position}></Marker>;
 }
 
+// eslint-disable-next-line react/prop-types
 export const Map = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [position, setPosition] = useState(null);
   const [last, setLast] = useState(null);
+  const [taxi, setTaxi] = useState(null);
+
+  socket.on("clientJoined", async (data) => {
+    const uniqueId = await data;
+    socket.emit("clientJoined", {
+      roomId: uniqueId,
+    });
+  });
+
+  socket.on("driverIsGoing", async (driverData) => {
+    if (driverData) {
+      navigate("/select-taxi");
+      setTaxi(driverData);
+    }
+  });
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((currentLocation) => {
@@ -63,8 +82,8 @@ export const Map = () => {
             {location.pathname !== "/" ? <BackToHome navigate={navigate} /> : null}
             <Routes>
               <Route path="/" element={<ControlMenu />} />
-              <Route path="/call-taxi" element={<CallTaxi setLast={setLast} last={last} />} />
-              <Route path="/select-taxi" element={<SelectTaxi last={last} position={position} />} />
+              <Route path="/call-taxi" element={<CallTaxi socket={socket} setLast={setLast} last={last} />} />
+              <Route path="/select-taxi" element={<SelectTaxi taxi={taxi} last={last} position={position} />} />
             </Routes>
           </div>
           <TileLayer url="https://tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token=N3MqJcqPUczcjAdSTBajt6UpuSt6dao04rmOz1EzZSN20O1p59aydcPcoHEK3wBD" />

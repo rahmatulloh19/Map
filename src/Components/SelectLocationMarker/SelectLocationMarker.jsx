@@ -6,7 +6,7 @@ import Image from "../../assets/ic_Pin.svg";
 import { useLocation } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-export const SelectLocationMarker = ({ setLast, last }) => {
+export const SelectLocationMarker = ({ isDisable, setLast, last }) => {
   const { pathname } = useLocation();
 
   const [position, setPosition] = useState(null);
@@ -21,7 +21,7 @@ export const SelectLocationMarker = ({ setLast, last }) => {
       //   console.log(data.address.road);
       //   console.log(data.display_name.split(", ", 2));
       // });
-      if (pathname === "/call-taxi") {
+      if (pathname === "/call-taxi" && !isDisable) {
         setLast(map.getCenter());
       }
       if (pathname === "/select-taxi") {
@@ -29,7 +29,7 @@ export const SelectLocationMarker = ({ setLast, last }) => {
       }
     },
     move() {
-      setPosition(map.getCenter());
+      if (!isDisable) setPosition(map.getCenter());
       if (!isMoved) {
         setIsMoved(true);
       }

@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import car from "../../assets/car (1).svg";
-import carLuxury from "../../assets/car (2).svg";
-import carFamily from "../../assets/delivery-van.svg";
 import L from "leaflet";
 import { SelectLocationMarker } from "../SelectLocationMarker/SelectLocationMarker";
+import { Navigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-export const SelectTaxi = ({ last }) => {
+export const SelectTaxi = ({ last, taxi }) => {
   const ref = useRef();
+  console.log(taxi);
 
   useEffect(() => {
     if (ref?.current) {
@@ -16,7 +16,7 @@ export const SelectTaxi = ({ last }) => {
     }
   }, []);
 
-  return (
+  return last && taxi ? (
     <div className="absolute bottom-0 flex flex-col bg-white " ref={ref}>
       <SelectLocationMarker last={last} />
 
@@ -29,25 +29,23 @@ export const SelectTaxi = ({ last }) => {
               Economy
             </span>
           </label>
-          <label className="">
-            <input className="car-inputs visually-hidden" type="radio" name="typeCar" />
-            <span className="car-content max-w-[100px] min-w-16 px-3 rounded-xl transition border border-neutral-500 pt-[5px] pb-[11px] grow flex items-center justify-center flex-col opacity-70">
-              <img src={carLuxury} alt="" />
-              Luxury
-            </span>
-          </label>
-          <label className="">
-            <input className="car-inputs visually-hidden" type="radio" name="typeCar" />
-            <span className="car-content max-w-[100px] min-w-16 px-3 rounded-xl transition border border-neutral-500 pt-[5px] pb-[11px] grow flex items-center justify-center flex-col opacity-70">
-              <img src={carFamily} alt="" />
-              Family
-            </span>
-          </label>
+          <div>
+            <h2>{taxi.name}</h2>
+            <h3>
+              {taxi.car.name} {taxi.car.color}
+            </h3>
+            <p>{taxi.car.number}</p>
+
+            <p>Rating: {taxi.rating}</p>
+          </div>
         </div>
-        <button className="bg-black text-xl text-white w-full py-5 rounded-[30px]" type="submit">
-          Taxi chaqirish
-        </button>
+
+        <a className="bg-black text-center text-xl !text-white w-full py-5 rounded-[30px]" href={`tel:${taxi.phone.split(" ").join("")}`}>
+          {taxi.phone}
+        </a>
       </div>
     </div>
+  ) : (
+    <Navigate to={"/"} />
   );
 };
