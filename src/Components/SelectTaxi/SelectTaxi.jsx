@@ -7,7 +7,6 @@ import { Navigate } from "react-router-dom";
 // eslint-disable-next-line react/prop-types
 export const SelectTaxi = ({ last, taxi }) => {
   const ref = useRef();
-  console.log(taxi);
 
   useEffect(() => {
     if (ref?.current) {

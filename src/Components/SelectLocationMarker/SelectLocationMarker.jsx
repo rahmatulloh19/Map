@@ -24,9 +24,6 @@ export const SelectLocationMarker = ({ isDisable, setLast, last }) => {
       if (pathname === "/call-taxi" && !isDisable) {
         setLast(map.getCenter());
       }
-      if (pathname === "/select-taxi") {
-        // console.log(last);
-      }
     },
     move() {
       if (!isDisable) setPosition(map.getCenter());

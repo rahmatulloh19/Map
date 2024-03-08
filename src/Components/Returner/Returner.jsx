@@ -7,7 +7,6 @@ export const Returner = () => {
       className="w-[50px] h-[50px] shadow-md bg-white rounded-xl flex justify-center items-center ml-auto -translate-y-full mb-3.5 absolute -top-3.5 right-5"
       onClick={() => {
         map.locate();
-        console.log("click");
       }}
     >
       <svg width={30} height={30} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
